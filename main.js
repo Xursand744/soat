@@ -30,7 +30,7 @@ clock()
 
 
 let tabsItem = document.querySelectorAll('.tabsItem')
-let tabsContentItem  = document.querySelectorAll('.tabsContentItem ')
+let tabsContentItem = document.querySelectorAll('.tabsContentItem ')
 
 for (let i = 0; i < tabsItem.length; i++) {
 
@@ -40,7 +40,7 @@ for (let i = 0; i < tabsItem.length; i++) {
       tabsContentItem[k].classList.remove('active')
 
     }
-    
+
     tabsItem[i].classList.add('active')
     tabsContentItem[i].classList.add('active')
 
@@ -55,28 +55,63 @@ let stopwatchMinutes = document.querySelector('.stopwatch__minutes')
 let stopwatchHours = document.querySelector('.stopwatch__hours')
 let lampa = document.querySelector('.tabsLink__span')
 
+let foo
 
- 
-  stopwatchBtn.addEventListener('click', () => {
+function Sec() {
+  stopwatchSeconds.innerHTML++
 
-    
-    if (stopwatchBtn.innerText == 'START') {
-      stopwatchBtn.innerText = 'STOP'
+  if (stopwatchSeconds.innerHTML > 59) {
+    stopwatchSeconds.innerHTML = 0
+    stopwatchMinutes.innerHTML++
+  }
+  else if (stopwatchMinutes.innerHTML > 59) {
+    stopwatchMinutes.innerHTML = 0
+    stopwatchHours.innerHTML++
+  }
+  else if (stopwatchHours.innerHTML > 24) {
+    stopwatchHours.innerHTML = 0
+  }
+
+
+  foo = setTimeout(() => {
+    Sec()
+  }, 1);
+}
+
+
+
+
+
+
+
+
+
+
+stopwatchBtn.addEventListener('click', () => {
+
+
+  if (stopwatchBtn.innerText == 'START') {
+    stopwatchBtn.innerText = 'STOP'
     lampa.classList.add('active')
-    }
+    Sec()
+  }
 
-    else if(stopwatchBtn.innerText == 'STOP'){
-      stopwatchBtn.innerText = 'CLEAR'
-      lampa.classList.remove('active')
-      lampa.classList.add('active_clear')
-    }
+  else if (stopwatchBtn.innerText == 'STOP') {
+    stopwatchBtn.innerText = 'CLEAR'
+    lampa.classList.remove('active')
+    lampa.classList.add('active_clear')
+    clearInterval(foo)
+  }
 
-    else{
-      stopwatchBtn.innerText = 'START'
-      lampa.classList.remove('active_clear')
-    }
+  else {
+    stopwatchBtn.innerText = 'START'
+    lampa.classList.remove('active_clear')
+    stopwatchSeconds.innerHTML = 0
+    stopwatchMinutes.innerHTML = 0
+    stopwatchHours.innerHTML = 0
+  }
 
 
 
-  })
-  
+})
+
